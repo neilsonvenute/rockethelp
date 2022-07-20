@@ -1,6 +1,7 @@
 import { Heading, Icon, useTheme, VStack } from "native-base";
 import { Envelope, Key } from "phosphor-react-native";
 import { useState } from "react";
+import { Alert } from "react-native";
 
 import Logo from '../assets/logo_primary.svg';
 import { Button } from "../components/Button";
@@ -8,10 +9,16 @@ import { Input } from "../components/Input";
 
 export function SignIn() {
 
-  const [name,setName] = useState('')
+  const [email,setEmail] = useState('')
   const [password,setPassword] = useState('')
 
   const { colors } = useTheme()
+
+  function handleSigIn(){
+    if(!email || !password){
+      return Alert.alert('Entrar','Informe e-mail e senha')
+    }
+  }
 
   return (
     <VStack flex={1} alignItems="center" bg="gray.600" px={8} pt={24}>
@@ -24,14 +31,14 @@ export function SignIn() {
         placeholder="E-mail"
         mb={4}
         InputLeftElement={<Icon as={<Envelope color={colors.gray[300]} />} ml={4} />}
-        onChangeText={(text) => setName(text)}
+        onChangeText={(text) => setEmail(text)}
       />
       <Input placeholder="Senha" mb={8}
         InputLeftElement={<Icon as={<Key color={colors.gray[300]} />} ml={4} />}
         secureTextEntry 
         onChangeText={(text) => setPassword(text)}/>
 
-      <Button title="Entrar" w="full" />
+      <Button title="Entrar" w="full" onPress={handleSigIn}/>
     </VStack>
   )
 }
